@@ -5,7 +5,7 @@
  * @format
  */
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import type {PropsWithChildren} from 'react';
 import {
   SafeAreaView,
@@ -13,6 +13,7 @@ import {
   StatusBar,
   StyleSheet,
   Text,
+  TouchableOpacity,
   useColorScheme,
   View,
 } from 'react-native';
@@ -24,6 +25,8 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+
+import isEqual from "lodash/isEqual";
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -62,6 +65,16 @@ function App(): JSX.Element {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
+  const [testState, setTestState] = useState({});
+
+  useEffect(() => {
+    setTestState({ a: "1", b: "2" });
+  },[]);
+
+  useEffect(() => {
+    console.log("IS EQUAL?: ", isEqual(testState, { a: "1", b: "2" }));
+  },[testState]);
+
   return (
     <SafeAreaView style={backgroundStyle}>
       <StatusBar
@@ -76,9 +89,16 @@ function App(): JSX.Element {
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
+
+          <TouchableOpacity style={{ marginVertical: 20, alignSelf: "center" }} onPress={() => {
+            setTestState({ a: "1", b: "2", c: "3" });
+          }}>
+            <Text style={styles.highlight}>Test Button</Text> 
+          </TouchableOpacity>
+
           <Section title="Step One">
             Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
+            screen and then come back to see your edits. Here we go!
           </Section>
           <Section title="See Your Changes">
             <ReloadInstructions />
