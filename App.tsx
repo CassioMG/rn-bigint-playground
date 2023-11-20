@@ -28,6 +28,8 @@ import {
 
 import isEqual from "lodash/isEqual";
 
+import { Memo, MemoHash, MemoText, MemoType, AssetType } from "stellar-base";
+
 type SectionProps = PropsWithChildren<{
   title: string;
 }>;
@@ -73,6 +75,12 @@ function App(): JSX.Element {
 
   useEffect(() => {
     console.log("IS EQUAL?: ", isEqual(testState, { a: "1", b: "2" }));
+
+    const memoHash: MemoType = MemoHash;
+    const assetType: AssetType = "credit_alphanum4";
+    const memo: Memo = new Memo(MemoText, "test-memo");
+
+    console.log("STELLAR BASE IMPORT: ", { memoHash, assetType, memo });
   },[testState]);
 
   return (
